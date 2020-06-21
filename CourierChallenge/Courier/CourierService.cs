@@ -23,7 +23,7 @@ namespace Courier
             int total = 0;
             foreach (Parcel parcel in parcels)
             {
-                OutputParcel outputParcel = parcelManager.DetermineSize(parcel);
+                OutputParcel outputParcel = parcelManager.DetermineSizeAndPrice(parcel);
                 total += outputParcel.price;
                 output += outputParcel.GetFormattedOutput();
                 Console.WriteLine(outputParcel.GetFormattedOutput());

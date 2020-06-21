@@ -5,7 +5,7 @@ namespace Courier
 {
     public class ParcelManager
     {
-        public OutputParcel DetermineSize(Parcel parcel)
+        public OutputParcel DetermineSizeAndPrice(Parcel parcel)
         {
 
             List<int> dimentions = new List<int>();

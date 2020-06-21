@@ -44,5 +44,15 @@ namespace Courier.UnitTests
 
             Assert.Equal("Large parcel: $15\nTotal Cost: $15", result);
         }
+        [Fact]
+        public void Run_InputXL_ReturnOutput()
+        {
+            List<Parcel> parcels = new List<Parcel>();
+            parcels.Add(new Parcel(500, 10, 30));
+
+            var result = courierService.Run(parcels);
+
+            Assert.Equal("XL parcel: $25\nTotal Cost: $25", result);
+        }
     }
 }
