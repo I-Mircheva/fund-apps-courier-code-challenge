@@ -2,21 +2,16 @@ using Xunit;
 
 namespace Courier.UnitTests
 {
-    public class ParcelManager_GetParcelSize
+    public class Parcel_GetParcelSize
     {
-        public ParcelManager DefaultParcelManager()
-        {
-            return new ParcelManager();
-        }
-
         [Fact]
         public void GetParcelSize_InputSmallParcel_ReturnSmallSize()
         {
             Parcel parcel = new Parcel(6, 6, 2, 10);
 
-            var result = DefaultParcelManager().GetParcelSize(parcel);
+            var result = parcel.GetParcelType();
 
-            Assert.Equal(ParcelSize.Small, result);
+            Assert.Equal(ParcelType.Small, result);
         }
 
         [Fact]
@@ -24,9 +19,9 @@ namespace Courier.UnitTests
         {
             Parcel parcel = new Parcel(15, 14, 12, 1);
 
-            var result = DefaultParcelManager().GetParcelSize(parcel);
+            var result = parcel.GetParcelType();
 
-            Assert.Equal(ParcelSize.Medium, result);
+            Assert.Equal(ParcelType.Medium, result);
         }
 
         [Fact]
@@ -34,9 +29,9 @@ namespace Courier.UnitTests
         {
             Parcel parcel = new Parcel(23, 50, 2, 5);
 
-            var result = DefaultParcelManager().GetParcelSize(parcel);
+            var result = parcel.GetParcelType();
 
-            Assert.Equal(ParcelSize.Large, result);
+            Assert.Equal(ParcelType.Large, result);
         }
 
         [Fact]
@@ -44,9 +39,9 @@ namespace Courier.UnitTests
         {
             Parcel parcel = new Parcel(140, 50, 2, 10);
 
-            var result = DefaultParcelManager().GetParcelSize(parcel);
+            var result = parcel.GetParcelType();
 
-            Assert.Equal(ParcelSize.XL, result);
+            Assert.Equal(ParcelType.XL, result);
         }
     }
 }

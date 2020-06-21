@@ -13,34 +13,10 @@ namespace Courier.UnitTests
         [Fact]
         public void Run_InputSmallSize_ReturnSmallPrice()
         {
-            ParcelSize smallParcel = ParcelSize.Small;
+            ParcelType smallParcel = ParcelType.Small;
             var result = DefaultPriceManager().GetParcelPrice(smallParcel);
 
             Assert.Equal(3, result);
-        }
-        [Fact]
-        public void Run_InputMediumSize_ReturnMediumPrice()
-        {
-            ParcelSize parcelSize = ParcelSize.Medium;
-            var result = DefaultPriceManager().GetParcelPrice(parcelSize);
-
-            Assert.Equal(8, result);
-        }
-        [Fact]
-        public void Run_InputLargeSize_ReturnLargePrice()
-        {
-            ParcelSize parcelSize = ParcelSize.Large;
-            var result = DefaultPriceManager().GetParcelPrice(parcelSize);
-
-            Assert.Equal(15, result);
-        }
-        [Fact]
-        public void Run_InputXLSize_ReturnXLPrice()
-        {
-            ParcelSize parcelSize = ParcelSize.XL;
-            var result = DefaultPriceManager().GetParcelPrice(parcelSize);
-
-            Assert.Equal(25, result);
         }
     }
 }

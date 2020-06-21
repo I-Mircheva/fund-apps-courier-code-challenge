@@ -6,7 +6,6 @@ namespace Courier.UnitTests
 {
     public class CourierService_Run
     {
-
         public CourierService DefaultCourierService()
         {
             return new CourierService();
@@ -20,8 +19,7 @@ namespace Courier.UnitTests
             parcels.Add(new Parcel(30, 10, 30, 1));
 
             bool isSpeedy = false;
-            ParcelSize mediumSize = ParcelSize.Medium;
-            OutputParcel outputParcel = new OutputParcel(mediumSize, 0, 8);
+            OutputParcel outputParcel = new OutputParcel(new Parcel(30, 10, 30, 1), 0, 8);
 
             var mockParcelManager = new Mock<ParcelManager>();
             mockParcelManager.Setup(x => x.DetermineOutputParcel(It.IsAny<Parcel>()))
@@ -30,8 +28,9 @@ namespace Courier.UnitTests
             ParcelManager parcelManager = mockParcelManager.SetupAllProperties().Object;
 
             var result = DefaultCourierService().Run(parcels, isSpeedy, parcelManager);
+            string combindedString = string.Join("", result.ToArray());
 
-            Assert.Equal("Medium parcel: $8\nMedium parcel: $8\nTotal Cost: $16", result);
+            Assert.Equal("Medium parcel: $8\nMedium parcel: $8\nTotal Cost: $16", combindedString);
         }
 
         [Fact]
@@ -42,8 +41,7 @@ namespace Courier.UnitTests
             parcels.Add(new Parcel(30, 10, 30, 1));
 
             bool isSpeedy = true;
-            ParcelSize mediumSize = ParcelSize.Medium;
-            OutputParcel outputParcel = new OutputParcel(mediumSize, 0, 8);
+            OutputParcel outputParcel = new OutputParcel(new Parcel(30, 10, 30, 1), 0, 8);
 
             var mockParcelManager = new Mock<ParcelManager>();
             mockParcelManager.Setup(x => x.DetermineOutputParcel(It.IsAny<Parcel>()))
@@ -52,8 +50,9 @@ namespace Courier.UnitTests
             ParcelManager parcelManager = mockParcelManager.SetupAllProperties().Object;
 
             var result = DefaultCourierService().Run(parcels, isSpeedy, parcelManager);
+            string combindedString = string.Join("", result.ToArray());
 
-            Assert.Equal("Medium parcel: $8\nMedium parcel: $8\nTotal Cost with Speedy Shipping: $32", result);
+            Assert.Equal("Medium parcel: $8\nMedium parcel: $8\nTotal Cost with Speedy Shipping: $32", combindedString);
         }
     }
 }

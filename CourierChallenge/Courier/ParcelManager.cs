@@ -7,68 +7,25 @@ namespace Courier
     public class ParcelManager
     {
         private const int PRICE_PER_KILO = 2;
+        private const int PRICE_PER_KILO_HEAVY = 1;
+        private const int PRICE_HEAVY = 50;
         public virtual OutputParcel DetermineOutputParcel(Parcel parcel)
         {
-            ParcelSize parcelSize = GetParcelSize(parcel);
+            Parcel outputParcel = parcel;
 
-            int overweight = GetParcelOverweight(parcelSize, parcel);
+            int overweight = parcel.GetParcelOverweight();
+            int basePrice = parcel.GetBasePrice();
 
-            int basePrice = GetBasePrice(parcelSize);
+            int price = basePrice + overweight * PRICE_PER_KILO;
+            int priceWithOverweightAdjustment = price;
 
-            int priceWithOverweightAdjustment = basePrice + overweight * PRICE_PER_KILO;
-
-            return new OutputParcel(parcelSize, overweight, priceWithOverweightAdjustment);
-        }
-
-        public virtual int GetBasePrice(ParcelSize parcelSize)
-        {
-            PriceManager priceManager = new PriceManager();
-
-            return priceManager.GetParcelPrice(parcelSize);
-        }
-
-        public virtual int GetParcelOverweight(ParcelSize parcelSize, Parcel parcel)
-        {
-            WeightManager weightManager = new WeightManager();
-            int overweight = 0;
-            int maxFreeWeight = weightManager.GetParcelWeight(parcelSize);
-
-            if (parcel.weight > maxFreeWeight)
+            if (price >= PRICE_HEAVY)
             {
-                overweight = parcel.weight - maxFreeWeight;
+                outputParcel = new Parcel(parcel, ParcelType.Heavy);
+                overweight = outputParcel.GetParcelOverweight();
+                priceWithOverweightAdjustment = outputParcel.GetBasePrice() + overweight * PRICE_PER_KILO_HEAVY;
             }
-
-            return overweight;
-        }
-        public virtual ParcelSize GetParcelSize(Parcel parcel)
-        {
-
-            List<int> dimentions = new List<int>();
-            dimentions.Add(parcel.dimentionX);
-            dimentions.Add(parcel.dimentionY);
-            dimentions.Add(parcel.dimentionZ);
-
-            int maxDimention = dimentions.Max();
-            ParcelSize parcelSize = ParcelSize.Small;
-
-            if (maxDimention < 10)
-            {
-                parcelSize = ParcelSize.Small;
-            }
-            else if (maxDimention < 50 && maxDimention >= 10)
-            {
-                parcelSize = ParcelSize.Medium;
-            }
-            else if (maxDimention < 100 && maxDimention >= 50)
-            {
-                parcelSize = ParcelSize.Large;
-            }
-            else if (maxDimention >= 100)
-            {
-                parcelSize = ParcelSize.XL;
-            }
-            return parcelSize;
-
+            return new OutputParcel(outputParcel, overweight, priceWithOverweightAdjustment);
         }
     }
 }

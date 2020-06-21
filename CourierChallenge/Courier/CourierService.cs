@@ -17,24 +17,24 @@ namespace Courier
             bool isSpeedy = true;
             ParcelManager parcelManager = new ParcelManager();
 
-            string output = new CourierService().Run(parcels, isSpeedy, parcelManager);
+            List<string> output = new CourierService().Run(parcels, isSpeedy, parcelManager);
         }
 
-        public string Run(List<Parcel> parcels, bool isSpeedy, ParcelManager parcelManager)
+        public List<string> Run(List<Parcel> parcels, bool isSpeedy, ParcelManager parcelManager)
         {
-            string output = "";
+            List<string> output = new List<string>();
             int total = 0;
             foreach (Parcel parcel in parcels)
             {
                 OutputParcel outputParcel = parcelManager.DetermineOutputParcel(parcel);
                 total += outputParcel.price;
-                output += outputParcel.GetFormattedOutput();
+                output.Add(outputParcel.GetFormattedOutput());
                 Console.WriteLine(outputParcel.GetFormattedOutput());
             }
 
             var totalString = isSpeedy ? TOTAL_SPEEDY_STRING + total * 2 : TOTAL_STRING + total;
             Console.WriteLine(totalString);
-            output += totalString;
+            output.Add(totalString);
 
             return output;
         }

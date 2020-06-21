@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Courier.UnitTests
 {
-    public class ParcelManager_GetBasePrice
+    public class Parcel_GetBasePrice
     {
         public ParcelManager DefaultParcelManager()
         {
@@ -14,11 +14,11 @@ namespace Courier.UnitTests
         [Fact]
         public void GetBasePrice_InputParcelSize_ReturnParcelPrice()
         {
-            ParcelSize parcelSize = ParcelSize.Large;
+            Parcel parcel = new Parcel(1, 1, 4, 5);
 
-            var result = DefaultParcelManager().GetBasePrice(parcelSize);
+            var result = parcel.GetBasePrice();
 
-            Assert.Equal(15, result);
+            Assert.Equal(3, result);
         }
     }
 }

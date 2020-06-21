@@ -3,13 +3,13 @@ namespace Courier
 
     public class OutputParcel
     {
-        private ParcelSize parcelSize;
+        private ParcelType parcelType;
         public int price { get; }
         public int overweight { get; }
 
-        public OutputParcel(ParcelSize parcelSize, int overweight, int price)
+        public OutputParcel(Parcel parcel, int overweight, int price)
         {
-            this.parcelSize = parcelSize;
+            this.parcelType = parcel.parcelType;
             this.price = price;
             this.overweight = overweight;
         }
@@ -18,11 +18,11 @@ namespace Courier
         {
             if (this.overweight == 0)
             {
-                return $"{this.parcelSize} parcel: ${this.price}\n";
+                return $"{this.parcelType} parcel: ${this.price}\n";
             }
             else
             {
-                return $"{this.parcelSize} parcel + {this.overweight} kg: ${this.price}\n";
+                return $"{this.parcelType} parcel + {this.overweight} kg: ${this.price}\n";
             }
         }
     }
