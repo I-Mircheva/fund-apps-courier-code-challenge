@@ -4,7 +4,7 @@ namespace Courier
 {
     public class PriceManager
     {
-        public Dictionary<ParcelSize, int> priceList { get; }
+        private Dictionary<ParcelSize, int> priceList;
 
         public PriceManager()
         {
@@ -13,6 +13,11 @@ namespace Courier
             priceList.Add(ParcelSize.Medium, 8);
             priceList.Add(ParcelSize.Large, 15);
             priceList.Add(ParcelSize.XL, 25);
+        }
+
+        public virtual int GetParcelPrice(ParcelSize parcelSize)
+        {
+            return priceList.GetValueOrDefault(parcelSize);
         }
     }
 }

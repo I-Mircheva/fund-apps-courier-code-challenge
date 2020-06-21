@@ -1,29 +1,29 @@
-using System;
-
 namespace Courier
 {
-    public enum ParcelSize
-    {
-        Small,
-        Medium,
-        Large,
-        XL
-    }
+
     public class OutputParcel
     {
-        private const string PARCEL_STRING = " parcel: $";
         private ParcelSize parcelSize;
         public int price { get; }
+        public int overweight { get; }
 
-        public OutputParcel(ParcelSize parcelSize, int price)
+        public OutputParcel(ParcelSize parcelSize, int overweight, int price)
         {
             this.parcelSize = parcelSize;
             this.price = price;
+            this.overweight = overweight;
         }
 
         public string GetFormattedOutput()
         {
-            return this.parcelSize + PARCEL_STRING + this.price + Environment.NewLine;
+            if (this.overweight == 0)
+            {
+                return $"{this.parcelSize} parcel: ${this.price}\n";
+            }
+            else
+            {
+                return $"{this.parcelSize} parcel + {this.overweight} kg: ${this.price}\n";
+            }
         }
     }
 }

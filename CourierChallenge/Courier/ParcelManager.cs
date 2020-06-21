@@ -6,17 +6,41 @@ namespace Courier
 {
     public class ParcelManager
     {
-        public OutputParcel DetermineSizeAndPrice(Parcel parcel)
+        private const int PRICE_PER_KILO = 2;
+        public virtual OutputParcel DetermineOutputParcel(Parcel parcel)
         {
             ParcelSize parcelSize = GetParcelSize(parcel);
 
-            PriceManager priceManager = new PriceManager();
-            int price = priceManager.priceList.GetValueOrDefault(parcelSize);
+            int overweight = GetParcelOverweight(parcelSize, parcel);
 
-            return new OutputParcel(parcelSize, price);
+            int basePrice = GetBasePrice(parcelSize);
+
+            int priceWithOverweightAdjustment = basePrice + overweight * PRICE_PER_KILO;
+
+            return new OutputParcel(parcelSize, overweight, priceWithOverweightAdjustment);
         }
 
-        private ParcelSize GetParcelSize(Parcel parcel)
+        public virtual int GetBasePrice(ParcelSize parcelSize)
+        {
+            PriceManager priceManager = new PriceManager();
+
+            return priceManager.GetParcelPrice(parcelSize);
+        }
+
+        public virtual int GetParcelOverweight(ParcelSize parcelSize, Parcel parcel)
+        {
+            WeightManager weightManager = new WeightManager();
+            int overweight = 0;
+            int maxFreeWeight = weightManager.GetParcelWeight(parcelSize);
+
+            if (parcel.weight > maxFreeWeight)
+            {
+                overweight = parcel.weight - maxFreeWeight;
+            }
+
+            return overweight;
+        }
+        public virtual ParcelSize GetParcelSize(Parcel parcel)
         {
 
             List<int> dimentions = new List<int>();
