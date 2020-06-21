@@ -1,11 +1,22 @@
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Courier
 {
     public class ParcelManager
     {
         public OutputParcel DetermineSizeAndPrice(Parcel parcel)
+        {
+            ParcelSize parcelSize = GetParcelSize(parcel);
+
+            PriceManager priceManager = new PriceManager();
+            int price = priceManager.priceList.GetValueOrDefault(parcelSize);
+
+            return new OutputParcel(parcelSize, price);
+        }
+
+        private ParcelSize GetParcelSize(Parcel parcel)
         {
 
             List<int> dimentions = new List<int>();
@@ -15,9 +26,6 @@ namespace Courier
 
             int maxDimention = dimentions.Max();
             ParcelSize parcelSize = ParcelSize.Small;
-
-            PriceManager priceManager = new PriceManager();
-            int price = 0;
 
             if (maxDimention < 10)
             {
@@ -35,11 +43,8 @@ namespace Courier
             {
                 parcelSize = ParcelSize.XL;
             }
+            return parcelSize;
 
-            price = priceManager.priceList.GetValueOrDefault(parcelSize);
-
-
-            return new OutputParcel(parcelSize, price);
         }
     }
 }
