@@ -18,7 +18,7 @@ namespace Courier.UnitTests
             List<Parcel> parcels = new List<Parcel>();
             parcels.Add(new Parcel(20, 10, 30));
 
-            var result = courierService.Run(parcels);
+            var result = courierService.Run(parcels, false);
 
             Assert.Equal("Medium parcel: $8\nTotal Cost: $8", result);
         }
@@ -29,7 +29,7 @@ namespace Courier.UnitTests
             List<Parcel> parcels = new List<Parcel>();
             parcels.Add(new Parcel(2, 1, 3));
 
-            var result = courierService.Run(parcels);
+            var result = courierService.Run(parcels, false);
 
             Assert.Equal("Small parcel: $3\nTotal Cost: $3", result);
         }
@@ -40,7 +40,7 @@ namespace Courier.UnitTests
             List<Parcel> parcels = new List<Parcel>();
             parcels.Add(new Parcel(50, 10, 30));
 
-            var result = courierService.Run(parcels);
+            var result = courierService.Run(parcels, false);
 
             Assert.Equal("Large parcel: $15\nTotal Cost: $15", result);
         }
@@ -50,7 +50,7 @@ namespace Courier.UnitTests
             List<Parcel> parcels = new List<Parcel>();
             parcels.Add(new Parcel(500, 10, 30));
 
-            var result = courierService.Run(parcels);
+            var result = courierService.Run(parcels, false);
 
             Assert.Equal("XL parcel: $25\nTotal Cost: $25", result);
         }
