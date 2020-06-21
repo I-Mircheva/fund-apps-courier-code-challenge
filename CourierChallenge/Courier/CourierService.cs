@@ -11,7 +11,7 @@ namespace Courier
         {
             List<Parcel> parcels = new List<Parcel>();
             parcels.Add(new Parcel(20, 10, 30));
-            parcels.Add(new Parcel(7, 10, 3));
+            parcels.Add(new Parcel(7, 1, 3));
             parcels.Add(new Parcel(50, 10, 40));
             string output = new CourierService().Run(parcels);
         }
